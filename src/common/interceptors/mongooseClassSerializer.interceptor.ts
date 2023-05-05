@@ -25,7 +25,7 @@ function MongooseClassSerializerInterceptor(
       response: PlainLiteralObject | PlainLiteralObject[],
     ) {
       this.logger = new Logger('MongooseClassSerializerInterceptor');
-      this.logger.log('Serializing');
+      this.logger.log('Serializing\n');
       if (Array.isArray(response)) {
         return response.map(this.changePlainObjectToClass);
       }
@@ -37,9 +37,7 @@ function MongooseClassSerializerInterceptor(
       response: PlainLiteralObject | PlainLiteralObject[],
       options: ClassTransformOptions,
     ) {
-      const r = super.serialize(this.prepareResponse(response), options);
-      this.logger.log('Serialized', r);
-      return r;
+      return super.serialize(this.prepareResponse(response), options);
     }
   };
 }

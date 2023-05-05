@@ -25,9 +25,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     const check = await this.authService.checkUserExist(payload.email);
     if (!check.userExist) {
+      this.logger.error("User doesn't exist\n", 'JwtStrategy');
       throw new UnauthorizedException();
     }
-    this.logger.log(`success !`, 'JwtStrategy');
+    this.logger.log(`Success !\n`, 'JwtStrategy');
     return check.user;
   }
 }

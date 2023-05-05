@@ -41,7 +41,7 @@ export class RolesGuard implements CanActivate {
     );
 
     isAllowed
-      ? this.logger.log('User is allowed: ' + isAllowed, 'RolesGuard')
-      : this.logger.error('User is allowed: ' + isAllowed, 'RolesGuard');
+      ? this.logger.log('User is allowed: ' + isAllowed + '\n', 'RolesGuard')
+      : this.logger.error('User is allowed: ' + isAllowed + '\n', 'RolesGuard');
   }
 }
