@@ -7,13 +7,20 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from '../common/dtos/user.dtos';
 import { User } from 'src/common/schemas/user.schema';
 import MongooseClassSerializerInterceptor from 'src/common/interceptors/mongooseClassSerializer.interceptor';
+import { JwtAuthGuard } from 'src/common/guards/auth.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/types/roles.enum';
 
 @Controller('users')
+@Roles(Role.ROLE_ADMIN)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

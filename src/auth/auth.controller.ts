@@ -16,6 +16,9 @@ import { User, UserDocument } from 'src/common/schemas/user.schema';
 import MongooseClassSerializerInterceptor from 'src/common/interceptors/mongooseClassSerializer.interceptor';
 import { CredentialsDto } from 'src/common/dtos/credentials.dto';
 import { JwtAuthGuard } from 'src/common/guards/auth.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/types/roles.enum';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('auth')
 @UseInterceptors(MongooseClassSerializerInterceptor(User))
@@ -37,7 +40,8 @@ export class AuthController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ROLE_ADMIN, Role.ROLE_USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   protectedRoute(@Req() req: { user: UserDocument }) {
     return req.user;
   }
